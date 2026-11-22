@@ -50,6 +50,31 @@ jobs:
           PAGE_CHANNEL: ${{ inputs.page_channel || 'auto' }}
         run: python collect.py
 
+      - name: Побудова сторінки дашборду
+        if: always()
+        run: python build_site.py
+
+      - name: Публікація сторінки
+        if: always()
+        env:
+          SITE_TOKEN: ${{ secrets.SITE_TOKEN }}
+          SITE_REPO: unspokefires/opora-meta-ads-dashboard   # публічний репозиторій сторінки
+        run: |
+          if [ ! -f site/index.html ]; then echo "Сторінку не побудовано, публікацію пропущено."; exit 0; fi
+          if [ -z "$SITE_TOKEN" ]; then echo "Немає секрету SITE_TOKEN, публікацію пропущено."; exit 0; fi
+          git clone --depth 1 "https://x-access-token:${SITE_TOKEN}@github.com/${SITE_REPO}.git" site_repo
+          find site_repo -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a site/. site_repo/
+          cd site_repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Сторінка не змінилася."; exit 0; fi
+          # Публікуємо як один коміт без історії, щоб репозиторій сторінки не розростався.
+          git checkout --orphan deploy
+          git commit -q -m "Оновлення дашборду $(date -u +%F)"
+          git push --force origin deploy:main
+
       - name: Збереження архіву в репозиторії
         if: always()
         run: |
