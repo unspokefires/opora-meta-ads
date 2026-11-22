@@ -1,0 +1,59 @@
+name: Збір політичної реклами Meta
+
+on:
+  schedule:
+    - cron: "0 4 * * *"   # щодня о 04:00 UTC (06:00 взимку, 07:00 влітку за Києвом)
+  workflow_dispatch:
+    inputs:
+      date_from:
+        description: "Початок періоду РРРР-ММ-ДД (лише для дозавантаження; порожньо = звичайний режим)"
+        required: false
+        default: ""
+      date_to:
+        description: "Кінець періоду РРРР-ММ-ДД (порожньо = сьогодні)"
+        required: false
+        default: ""
+      page_channel:
+        description: "Канал сторінок: auto (щопонеділка), yes або no"
+        required: false
+        default: "auto"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Встановлення бібліотек
+        run: pip install -r requirements.txt
+
+      - name: Збір і запис у таблицю
+        env:
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          SHEET_URL: ${{ secrets.SHEET_URL }}
+          DATE_FROM: ${{ inputs.date_from }}
+          DATE_TO: ${{ inputs.date_to }}
+          PAGE_CHANNEL: ${{ inputs.page_channel || 'auto' }}
+        run: python collect.py
+
+      - name: Збереження архіву в репозиторії
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -d data ]; then git add data; fi
+          git diff --cached --quiet || (git commit -m "Дані за $(date -u +%F)" && git push)
