@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Політична реклама в Meta: витрати в Україні · ОПОРА</title>
+<meta name="description" content="Моніторинг витрат на політичну рекламу у Facebook та Instagram в Україні за даними бібліотеки реклами Meta. Громадянська мережа ОПОРА.">
+<style>
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --text: #1b1f24; --muted: #5d6673; --line: #e3e6ea;
+  --accent: #0b5cad; --accent-soft: #e6f0fa; --bar: #0b5cad; --map-empty: #eef1f4;
+  --map-0: #dce9f6; --map-1: #08306b; --stroke: #ffffff; --sel: #e8590c;
+  --shadow: 0 1px 2px rgba(0,0,0,.05), 0 2px 8px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111418; --surface: #1a1e24; --text: #e8eaed; --muted: #9aa3ad; --line: #2c323a;
+    --accent: #6cb0f5; --accent-soft: #1d2e42; --bar: #5aa2ec; --map-empty: #252a31;
+    --map-0: #1f3550; --map-1: #9fd0ff; --stroke: #111418; --sel: #ff922b;
+    --shadow: none;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 24px 20px 48px; }
+header h1 { font-size: 26px; line-height: 1.25; margin: 0 0 6px; }
+header p { margin: 0; color: var(--muted); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: flex-end; padding: 16px; margin: 20px 0 16px; }
+.ctl label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+select, input[type=search], button { font: inherit; color: var(--text); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
+button { cursor: pointer; }
+button:hover, select:hover { border-color: var(--accent); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; border-radius: 0; padding: 6px 10px; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.search { position: relative; min-width: 260px; flex: 1 1 260px; }
+.search input { width: 100%; }
+.sugg { position: absolute; z-index: 5; left: 0; right: 0; top: 100%; margin-top: 4px; list-style: none; padding: 4px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.12);
+  max-height: 320px; overflow-y: auto; display: none; }
+.sugg li { padding: 6px 8px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; }
+.sugg li:hover, .sugg li.act { background: var(--accent-soft); }
+.sugg small { color: var(--muted); white-space: nowrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; min-height: 0; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-soft); color: var(--accent);
+  border-radius: 999px; padding: 4px 6px 4px 12px; font-size: 14px; }
+.chip button { border: 0; background: transparent; color: inherit; padding: 0 6px; font-size: 16px; line-height: 1; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.kpi { padding: 16px; }
+.kpi .v { font-size: 26px; font-weight: 700; line-height: 1.2; }
+.kpi .l { color: var(--muted); font-size: 13px; }
+.grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+.panel { padding: 16px; }
+.panel h2 { font-size: 16px; margin: 0 0 4px; }
+.panel .sub { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+#map svg { width: 100%; height: auto; display: block; }
+#map path { stroke: var(--stroke); stroke-width: 1; cursor: pointer; transition: opacity .15s; fill-rule: evenodd; }
+#map path:hover, #map path:focus { outline: none; stroke: var(--text); stroke-width: 1.5; }
+#map path.sel { stroke: var(--sel); stroke-width: 2.5; }
+#map.has-sel path:not(.sel) { opacity: .55; }
+.legend { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-top: 8px; }
+.legend .ramp { flex: 0 0 160px; height: 10px; border-radius: 5px; background: linear-gradient(90deg, var(--map-0), var(--map-1)); }
+.tip { position: fixed; pointer-events: none; background: var(--text); color: var(--bg); padding: 6px 10px; border-radius: 6px;
+  font-size: 13px; display: none; z-index: 10; max-width: 260px; }
+.rlist { list-style: none; margin: 0; padding: 0; max-height: 520px; overflow-y: auto; }
+.rlist li { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; padding: 6px 8px; border-radius: 6px; cursor: pointer; }
+.rlist li:hover { background: var(--accent-soft); }
+.rlist li.sel { background: var(--accent-soft); outline: 2px solid var(--sel); }
+.rlist li.sep { border-top: 1px dashed var(--line); margin-top: 6px; padding-top: 10px; }
+.rlist .n { font-size: 14px; }
+.rlist .val { font-size: 13px; color: var(--muted); text-align: right; white-space: nowrap; }
+.rlist .bar { grid-column: 1 / -1; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.rlist .bar i { display: block; height: 100%; background: var(--bar); }
+.wide { margin-top: 16px; }
+#chart svg { width: 100%; height: 220px; display: block; }
+#chart rect.b { fill: var(--bar); }
+#chart rect.b:hover { opacity: .8; }
+#chart text { fill: var(--muted); font-size: 11px; }
+#chart line { stroke: var(--line); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-weight: 600; color: var(--muted); font-size: 12px; border-bottom: 1px solid var(--line); padding: 6px 8px; }
+td { border-bottom: 1px solid var(--line); padding: 7px 8px; vertical-align: top; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+td a.pg { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--muted); cursor: pointer; }
+td a.ext { color: var(--accent); text-decoration: none; font-size: 13px; }
+.share { display: inline-block; width: 60px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
+.share i { display: block; height: 100%; background: var(--bar); }
+details.method { margin-top: 16px; padding: 16px; }
+details.method summary { cursor: pointer; font-weight: 600; }
+details.method p { margin: 10px 0 0; color: var(--text); }
+footer { margin-top: 24px; color: var(--muted); font-size: 13px; }
+footer a { color: var(--accent); }
+.loading { padding: 40px; text-align: center; color: var(--muted); }
+.note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Політична реклама у Facebook та Instagram: витрати в Україні</h1>
+    <p>Моніторинг Громадянської мережі ОПОРА за даними бібліотеки реклами Meta · <span id="updated">завантаження…</span></p>
+  </header>
+
+  <section class="card controls" aria-label="Фільтри">
+    <div class="ctl">
+      <label>Період</label>
+      <div class="seg" id="presets">
+        <button data-p="4">4 тижні</button><button data-p="12">12 тижнів</button><button data-p="year">З початку року</button><button data-p="all">Увесь період</button>
+      </div>
+    </div>
+    <div class="ctl">
+      <label for="wfrom">Від тижня</label>
+      <select id="wfrom"></select>
+    </div>
+    <div class="ctl">
+      <label for="wto">До тижня</label>
+      <select id="wto"></select>
+    </div>
+    <div class="ctl">
+      <label>Дисклеймер</label>
+      <div class="seg" id="disc">
+        <button data-d="all">Усі</button><button data-d="1">З дисклеймером</button><button data-d="0">Без дисклеймера</button>
+      </div>
+    </div>
+    <div class="ctl search">
+      <label for="q">Рекламодавець</label>
+      <input id="q" type="search" placeholder="Почніть вводити назву сторінки" autocomplete="off">
+      <ul class="sugg" id="sugg" role="listbox"></ul>
+    </div>
+    <div class="ctl"><button id="reset">Скинути фільтри</button></div>
+  </section>
+
+  <div class="chips" id="chips"></div>
+
+  <section class="kpis">
+    <div class="card kpi"><div class="v" id="k-spend">—</div><div class="l" id="k-spend-l">оцінка витрат, грн</div></div>
+    <div class="card kpi"><div class="v" id="k-ads">—</div><div class="l">оголошень</div></div>
+    <div class="card kpi"><div class="v" id="k-pages">—</div><div class="l">рекламодавців (сторінок)</div></div>
+  </section>
+
+  <div class="grid">
+    <section class="card panel">
+      <h2>Витрати за областями</h2>
+      <p class="sub">Оцінка за часткою показів оголошень в області. Клацніть на область, щоб відфільтрувати решту сторінки.</p>
+      <div id="map"></div>
+      <div class="legend"><span>менше</span><span class="ramp"></span><span>більше</span><span id="legend-max"></span></div>
+    </section>
+    <section class="card panel">
+      <h2>Рейтинг областей</h2>
+      <p class="sub" id="rsub">Частка від витрат, розподілених за регіонами.</p>
+      <ul class="rlist" id="rlist"></ul>
+    </section>
+  </div>
+
+  <section class="card panel wide">
+    <h2>Динаміка за тижнями</h2>
+    <p class="sub">Витрати віднесено до тижня, коли оголошення почало показуватися. Останній тиждень зазвичай неповний.</p>
+    <div id="chart"></div>
+  </section>
+
+  <section class="card panel wide">
+    <h2 id="top-title">Найбільші рекламодавці</h2>
+    <p class="sub">Клацніть на назву, щоб відфільтрувати сторінку за рекламодавцем. Посилання «Meta» відкриває його оголошення в бібліотеці реклами.</p>
+    <div style="overflow-x:auto"><table id="top"></table></div>
+  </section>
+
+  <details class="card method">
+    <summary>Методологія і застереження</summary>
+    <p><b>Джерело.</b> Дані щодня збираються з Ad Library API — офіційного інтерфейсу бібліотеки реклами Meta. До вибірки потрапляє реклама, яку Meta віднесла до категорії «соціальні питання, вибори або політика» і яка показувалася в Україні. API не гарантує повноти відповіді, тому щотижня дані додатково звіряються зі звітом Ad Library Report.</p>
+    <p><b>Витрати — оцінка.</b> Meta повідомляє витрати діапазонами (наприклад, 100–199 доларів). Ми беремо середину діапазону, а для найвищого діапазону без верхньої межі — нижню межу. Суми перераховано в гривні за офіційним курсом НБУ на дату початку показу оголошення.</p>
+    <p><b>Регіони.</b> Регіональні витрати — оцінка: витрати оголошення, помножені на частку його показів в області. Частина оголошень не має даних про регіони, тому сума за регіонами менша за загальну. Тимчасово окуповані території показано як частину України.</p>
+    <p><b>Дисклеймер.</b> Під час воєнного стану дані рекламодавців у бібліотеці приховано. Позначка «з дисклеймером» означає, що рекламодавець указав себе як рекламодавця з України; реклама без дисклеймера включає як частину українських сторінок, так і іноземних рекламодавців, чия реклама досягла України.</p>
+    <p><b>Затримки.</b> Meta оновлює дані з запізненням до кількох днів, а витрати оголошень, які ще тривають, зростають. Цифри за останні тижні можуть змінюватися.</p>
+    <p id="m-stats"></p>
+  </details>
+
+  <footer>
+    <p>Громадянська мережа ОПОРА. Межі областей: Natural Earth (суспільне надбання). <span id="build"></span></p>
+  </footer>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const MAP = /*MAP_JSON*/null;
+const fmtInt = new Intl.NumberFormat('uk-UA');
+const fmt1 = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 1 });
+function money(v) {
+  if (v >= 1e9) return fmt1.format(v / 1e9) + ' млрд';
+  if (v >= 1e6) return fmt1.format(v / 1e6) + ' млн';
+  if (v >= 1e4) return fmt1.format(v / 1e3) + ' тис.';
+  return fmtInt.format(Math.round(v));
+}
+function pct(v) { return fmt1.format(v * 100) + '%'; }
+function dmy(iso) { const [y, m, d] = iso.split('-'); return `${d}.${m}.${y}`; }
+function weekEnd(iso) { const t = new Date(iso + 'T00:00:00Z'); t.setUTCDate(t.getUTCDate() + 6); return t.toISOString().slice(0, 10); }
+function el(tag, attrs = {}, text) { const e = document.createElement(tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
+
+let D, A, R, G, NW, NP;
+const S = { wFrom: 0, wTo: 0, disc: 'all', page: null, region: null };
+
+fetch('data.json').then(r => r.json()).then(init).catch(() => {
+  document.getElementById('updated').textContent = 'не вдалося завантажити дані';
+});
+
+function init(data) {
+  D = data;
+  A = { w: Int32Array.from(D.a.w), p: Int32Array.from(D.a.p), d: Int8Array.from(D.a.d), s: Float64Array.from(D.a.s), n: Int32Array.from(D.a.n) };
+  R = { w: Int32Array.from(D.r.w), p: Int32Array.from(D.r.p), d: Int8Array.from(D.r.d), g: Int16Array.from(D.r.g), s: Float64Array.from(D.r.s), n: Int32Array.from(D.r.n) };
+  G = D.regions; NW = D.weeks.length; NP = D.pages.length;
+  document.getElementById('updated').textContent = 'дані оновлено ' + D.updated;
+  document.getElementById('build').textContent = 'Сторінку згенеровано ' + D.built + '.';
+  const st = D.stats;
+  document.getElementById('m-stats').textContent =
+    `У поточному архіві ${fmtInt.format(st.ads)} оголошень від ${fmtInt.format(st.pages)} сторінок. ` +
+    `Без даних про регіони: ${fmtInt.format(st.no_regions)} оголошень; без курсу НБУ (валюта, якої НБУ не котирує): ${fmtInt.format(st.no_rate)}.`;
+  // pages total for suggestions
+  D.pageTotal = new Float64Array(NP);
+  for (let i = 0; i < A.p.length; i++) D.pageTotal[A.p[i]] += A.s[i];
+  // week selects
+  const wf = document.getElementById('wfrom'), wt = document.getElementById('wto');
+  D.weeks.forEach((w, i) => { wf.append(el('option', { value: i }, dmy(w))); wt.append(el('option', { value: i }, dmy(weekEnd(w)))); });
+  wf.onchange = () => { S.wFrom = +wf.value; if (S.wFrom > S.wTo) S.wTo = S.wFrom; render(); };
+  wt.onchange = () => { S.wTo = +wt.value; if (S.wTo < S.wFrom) S.wFrom = S.wTo; render(); };
+  document.querySelectorAll('#presets button').forEach(b => b.onclick = () => setPreset(b.dataset.p));
+  document.querySelectorAll('#disc button').forEach(b => b.onclick = () => { S.disc = b.dataset.d; render(); });
+  document.getElementById('reset').onclick = () => { S.page = null; S.region = null; S.disc = 'all'; setPreset('all'); };
+  buildMap(); setupSearch();
+  setPreset('all');
+}
+
+function setPreset(p) {
+  S.wTo = NW - 1;
+  if (p === 'all') S.wFrom = 0;
+  else if (p === 'year') { const y = new Date().getUTCFullYear() + '-01-01'; S.wFrom = Math.max(0, D.weeks.findIndex(w => weekEnd(w) >= y)); }
+  else S.wFrom = Math.max(0, NW - +p);
+  S.preset = p; render();
+}
+
+function pass(C, i) {
+  const w = C.w[i];
+  if (w < S.wFrom || w > S.wTo) return false;
+  if (S.disc !== 'all' && C.d[i] !== +S.disc) return false;
+  if (S.page !== null && C.p[i] !== S.page) return false;
+  return true;
+}
+
+function compute() {
+  const regS = new Float64Array(G.length), regN = new Int32Array(G.length);
+  for (let i = 0; i < R.w.length; i++) if (pass(R, i)) { regS[R.g[i]] += R.s[i]; regN[R.g[i]] += R.n[i]; }
+  const byP = new Float64Array(NP), byPN = new Int32Array(NP), byW = new Float64Array(NW);
+  let total = 0, ads = 0;
+  const C = S.region === null ? A : R;
+  for (let i = 0; i < C.w.length; i++) {
+    if (!pass(C, i)) continue;
+    if (S.region !== null && C.g[i] !== S.region) continue;
+    total += C.s[i]; ads += C.n[i]; byP[C.p[i]] += C.s[i]; byPN[C.p[i]] += C.n[i]; byW[C.w[i]] += C.s[i];
+  }
+  let pages = 0; for (let p = 0; p < NP; p++) if (byPN[p] > 0) pages++;
+  return { regS, regN, byP, byPN, byW, total, ads, pages };
+}
+
+function render() {
+  document.getElementById('wfrom').value = S.wFrom;
+  document.getElementById('wto').value = S.wTo;
+  document.querySelectorAll('#presets button').forEach(b => b.classList.toggle('on', b.dataset.p === S.preset &&
+    S.wTo === NW - 1));
+  document.querySelectorAll('#disc button').forEach(b => b.classList.toggle('on', b.dataset.d === S.disc));
+  const r = compute();
+  renderChips(); renderKpis(r); paintMap(r); renderRegions(r); renderChart(r); renderTop(r);
+}
+
+function renderChips() {
+  const c = document.getElementById('chips'); c.replaceChildren();
+  const add = (label, clear) => { const ch = el('span', { class: 'chip' }, label); const x = el('button', { 'aria-label': 'Прибрати фільтр' }, '×'); x.onclick = clear; ch.append(x); c.append(ch); };
+  if (S.region !== null) add('Регіон: ' + G[S.region][1], () => { S.region = null; render(); });
+  if (S.page !== null) add('Рекламодавець: ' + D.pages[S.page][1], () => { S.page = null; render(); });
+}
+
+function renderKpis(r) {
+  document.getElementById('k-spend').textContent = money(r.total) + ' грн';
+  document.getElementById('k-ads').textContent = fmtInt.format(r.ads);
+  document.getElementById('k-pages').textContent = fmtInt.format(r.pages);
+  document.getElementById('k-spend-l').textContent = S.region === null ? 'оцінка витрат, грн' : 'оцінка витрат у регіоні, грн';
+}
+
+const ISO_INDEX = {};
+function buildMap() {
+  G.forEach((g, i) => ISO_INDEX[g[0]] = i);
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${MAP.width} ${MAP.height}`);
+  svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Мапа витрат за областями України');
+  const tip = document.getElementById('tip');
+  MAP.regions.forEach(reg => {
+    const p = document.createElementNS(ns, 'path');
+    p.setAttribute('d', reg.d); p.setAttribute('tabindex', '0'); p.setAttribute('role', 'button');
+    p.setAttribute('aria-label', reg.name); p.dataset.iso = reg.iso;
+    const toggle = () => { const gi = ISO_INDEX[reg.iso]; S.region = S.region === gi ? null : gi; render(); };
+    p.onclick = toggle;
+    p.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } };
+    p.onmousemove = e => { tip.style.display = 'block'; tip.style.left = (e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px'; tip.textContent = p.dataset.tip || reg.name; };
+    p.onmouseleave = () => { tip.style.display = 'none'; };
+    svg.append(p);
+  });
+  document.getElementById('map').append(svg);
+}
+
+function mix(a, b, t) {
+  const pa = a.match(/\w\w/g).map(h => parseInt(h, 16)), pb = b.match(/\w\w/g).map(h => parseInt(h, 16));
+  return '#' + pa.map((v, i) => Math.round(v + (pb[i] - v) * t).toString(16).padStart(2, '0')).join('');
+}
+function paintMap(r) {
+  const cs = getComputedStyle(document.documentElement);
+  const c0 = cs.getPropertyValue('--map-0').trim(), c1 = cs.getPropertyValue('--map-1').trim(), ce = cs.getPropertyValue('--map-empty').trim();
+  let max = 0, uaTotal = 0;
+  MAP.regions.forEach(reg => { const v = r.regS[ISO_INDEX[reg.iso]]; max = Math.max(max, v); uaTotal += v; });
+  document.getElementById('map').classList.toggle('has-sel', S.region !== null && G[S.region][0].startsWith('UA-'));
+  document.querySelectorAll('#map path').forEach(p => {
+    const gi = ISO_INDEX[p.dataset.iso], v = r.regS[gi];
+    p.style.fill = v > 0 && max > 0 ? mix(c0, c1, Math.sqrt(v / max)) : ce;
+    p.classList.toggle('sel', S.region === gi);
+    p.dataset.tip = `${G[gi][1]}: ${money(v)} грн` + (uaTotal > 0 ? ` (${pct(v / uaTotal)} від витрат в Україні)` : '');
+  });
+  document.getElementById('legend-max').textContent = max > 0 ? 'макс. ' + money(max) + ' грн' : '';
+}
+
+function renderRegions(r) {
+  const ul = document.getElementById('rlist'); ul.replaceChildren();
+  const all = r.regS.reduce((a, b) => a + b, 0);
+  const ua = G.map((g, i) => i).filter(i => G[i][0].startsWith('UA-')).sort((a, b) => r.regS[b] - r.regS[a]);
+  const extra = G.map((g, i) => i).filter(i => !G[i][0].startsWith('UA-'));
+  const max = Math.max(...ua.map(i => r.regS[i]), 1e-9);
+  [...ua, ...extra].forEach((i, k) => {
+    const li = el('li'); if (k === ua.length) li.classList.add('sep'); if (S.region === i) li.classList.add('sel');
+    li.append(el('span', { class: 'n' }, G[i][1]));
+    li.append(el('span', { class: 'val' }, `${money(r.regS[i])} грн · ${all > 0 ? pct(r.regS[i] / all) : '—'}`));
+    const bar = el('span', { class: 'bar' }), fill = el('i'); fill.style.width = (100 * Math.min(1, r.regS[i] / max)) + '%'; bar.append(fill); li.append(bar);
+    li.onclick = () => { S.region = S.region === i ? null : i; render(); };
+    ul.append(li);
+  });
+}
+
+function renderChart(r) {
+  const box = document.getElementById('chart'); box.replaceChildren();
+  const ns = 'http://www.w3.org/2000/svg', W = 1000, H = 220, L = 76, B = 24, T = 10;
+  const svg = document.createElementNS(ns, 'svg'); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('preserveAspectRatio', 'none');
+  const ws = []; for (let w = S.wFrom; w <= S.wTo; w++) ws.push(w);
+  const max = Math.max(...ws.map(w => r.byW[w]), 1);
+  const bw = (W - L) / ws.length;
+  for (let k = 0; k <= 4; k++) {
+    const y = T + (H - T - B) * (1 - k / 4);
+    const ln = document.createElementNS(ns, 'line'); ln.setAttribute('x1', L); ln.setAttribute('x2', W); ln.setAttribute('y1', y); ln.setAttribute('y2', y); svg.append(ln);
+    const tx = document.createElementNS(ns, 'text'); tx.setAttribute('x', L - 6); tx.setAttribute('y', y + 4); tx.setAttribute('text-anchor', 'end'); tx.textContent = money(max * k / 4); svg.append(tx);
+  }
+  const every = Math.ceil(ws.length / 12);
+  ws.forEach((w, k) => {
+    const h = (H - T - B) * r.byW[w] / max;
+    const rc = document.createElementNS(ns, 'rect'); rc.setAttribute('class', 'b');
+    rc.setAttribute('x', L + k * bw + bw * 0.12); rc.setAttribute('width', Math.max(1, bw * 0.76));
+    rc.setAttribute('y', H - B - h); rc.setAttribute('height', h);
+    const t = document.createElementNS(ns, 'title'); t.textContent = `${dmy(D.weeks[w])}–${dmy(weekEnd(D.weeks[w]))}: ${money(r.byW[w])} грн`; rc.append(t);
+    svg.append(rc);
+    if (k % every === 0) { const tx = document.createElementNS(ns, 'text'); tx.setAttribute('x', L + k * bw + bw / 2); tx.setAttribute('y', H - 6); tx.setAttribute('text-anchor', 'middle'); tx.textContent = dmy(D.weeks[w]).slice(0, 5); svg.append(tx); }
+  });
+  box.append(svg);
+}
+
+function renderTop(r) {
+  const t = document.getElementById('top'); t.replaceChildren();
+  const head = el('tr'); ['#', 'Рекламодавець (сторінка)', 'Витрати, грн', 'Частка', 'Оголошень', ''].forEach((h, i) => head.append(el('th', i >= 2 && i <= 4 ? { class: 'num' } : {}, h)));
+  t.append(head);
+  const idx = []; for (let p = 0; p < NP; p++) if (r.byPN[p] > 0) idx.push(p);
+  idx.sort((a, b) => r.byP[b] - r.byP[a]);
+  const top = idx.slice(0, 30), max = r.byP[top[0]] || 1;
+  document.getElementById('top-title').textContent = S.region === null ? 'Найбільші рекламодавці' : 'Найбільші рекламодавці в регіоні: ' + G[S.region][1];
+  top.forEach((p, k) => {
+    const tr = el('tr');
+    tr.append(el('td', {}, k + 1));
+    const td = el('td'); const a = el('a', { class: 'pg', role: 'button', tabindex: '0' }, D.pages[p][1]);
+    a.onclick = () => { S.page = S.page === p ? null : p; render(); };
+    td.append(a); tr.append(td);
+    tr.append(el('td', { class: 'num' }, money(r.byP[p])));
+    const sh = el('td', { class: 'num' }); const bar = el('span', { class: 'share' }), i = el('i'); i.style.width = (100 * r.byP[p] / max) + '%'; bar.append(i); sh.append(bar, document.createTextNode(r.total > 0 ? pct(r.byP[p] / r.total) : '—')); tr.append(sh);
+    tr.append(el('td', { class: 'num' }, fmtInt.format(r.byPN[p])));
+    const lk = el('td');
+    if (D.pages[p][0] && D.pages[p][0] !== '0') lk.append(el('a', { class: 'ext', target: '_blank', rel: 'noopener', href: `https://www.facebook.com/ads/library/?active_status=all&ad_type=political_and_issue_ads&country=UA&view_all_page_id=${encodeURIComponent(D.pages[p][0])}` }, 'Meta ↗'));
+    tr.append(lk);
+    t.append(tr);
+  });
+  if (!top.length) { const tr = el('tr'); tr.append(el('td', { colspan: 6 }, 'За обраними фільтрами даних немає.')); t.append(tr); }
+}
+
+function setupSearch() {
+  const q = document.getElementById('q'), ul = document.getElementById('sugg');
+  let items = [], act = -1;
+  const close = () => { ul.style.display = 'none'; act = -1; };
+  const choose = p => { S.page = p; q.value = ''; close(); render(); };
+  q.oninput = () => {
+    const s = q.value.trim().toLowerCase(); ul.replaceChildren(); act = -1;
+    if (s.length < 2) return close();
+    items = [];
+    for (let p = 0; p < NP; p++) if (D.pages[p][1].toLowerCase().includes(s)) items.push(p);
+    items.sort((a, b) => D.pageTotal[b] - D.pageTotal[a]); items = items.slice(0, 12);
+    items.forEach(p => { const li = el('li', { role: 'option' }); li.append(el('span', {}, D.pages[p][1]), el('small', {}, money(D.pageTotal[p]) + ' грн')); li.onmousedown = e => { e.preventDefault(); choose(p); }; ul.append(li); });
+    ul.style.display = items.length ? 'block' : 'none';
+  };
+  q.onkeydown = e => {
+    const lis = ul.querySelectorAll('li');
+    if (e.key === 'ArrowDown') { act = Math.min(lis.length - 1, act + 1); }
+    else if (e.key === 'ArrowUp') { act = Math.max(0, act - 1); }
+    else if (e.key === 'Enter' && act >= 0) { choose(items[act]); return; }
+    else if (e.key === 'Escape') { close(); return; } else return;
+    e.preventDefault(); lis.forEach((li, i) => li.classList.toggle('act', i === act));
+  };
+  q.onblur = () => setTimeout(close, 100);
+}
+</script>
+</body>
+</html>
