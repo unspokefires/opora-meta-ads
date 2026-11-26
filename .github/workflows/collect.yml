@@ -28,9 +28,23 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 350
+    env:
+      ARCHIVE_DIR: archive
     steps:
       - uses: actions/checkout@v4
+
+      - name: Отримання архіву
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REMOTE="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads "$REMOTE" archive >/dev/null 2>&1; then
+            git clone -q --depth 1 --branch archive "$REMOTE" archive
+          else
+            mkdir -p archive
+            if [ -d data ]; then cp -a data/. archive/; echo "Архів перенесено з гілки main."; fi
+          fi
 
       - uses: actions/setup-python@v5
         with:
@@ -62,7 +76,7 @@ jobs:
         run: |
           if [ ! -f site/index.html ]; then echo "Сторінку не побудовано, публікацію пропущено."; exit 0; fi
           if [ -z "$SITE_TOKEN" ]; then echo "Немає секрету SITE_TOKEN, публікацію пропущено."; exit 0; fi
-          git clone --depth 1 "https://x-access-token:${SITE_TOKEN}@github.com/${SITE_REPO}.git" site_repo
+          git clone -q --depth 1 "https://x-access-token:${SITE_TOKEN}@github.com/${SITE_REPO}.git" site_repo
           find site_repo -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           cp -a site/. site_repo/
           cd site_repo
@@ -71,14 +85,45 @@ jobs:
           git add -A
           if git diff --cached --quiet; then echo "Сторінка не змінилася."; exit 0; fi
           # Публікуємо як один коміт без історії, щоб репозиторій сторінки не розростався.
-          git checkout --orphan deploy
+          git checkout -q --orphan deploy
           git commit -q -m "Оновлення дашборду $(date -u +%F)"
-          git push --force origin deploy:main
+          git push -q --force origin deploy:main
 
-      - name: Збереження архіву в репозиторії
+      - name: Вивантаження на спільний диск
         if: always()
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          DRIVE_ID: 0AKyjCFN54DSOUk9PVA   # спільний диск ОПОРИ
+        run: python sync_drive.py
+
+      - name: Збереження архіву
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [ -d data ]; then git add data; fi
-          git diff --cached --quiet || (git commit -m "Дані за $(date -u +%F)" && git push)
+          cd archive
+          if [ ! -d raw ]; then echo "Архіву немає, збереження пропущено."; exit 0; fi
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ ! -d .git ]; then
+            git init -q -b archive
+            git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          fi
+          git add -A
+          if git rev-parse -q --verify HEAD >/dev/null; then
+            if git diff --cached --quiet; then echo "Архів не змінився."; echo "archive_saved=1" >> "$GITHUB_ENV"; exit 0; fi
+            # Гілка archive зберігає лише останній стан, без історії: так репозиторій не розростається.
+            git checkout -q --orphan snapshot
+          fi
+          git commit -q -m "Архів станом на $(date -u +%F)"
+          git push -q --force origin HEAD:archive
+          echo "archive_saved=1" >> "$GITHUB_ENV"
+
+      - name: Прибирання старого архіву з main
+        if: always() && env.archive_saved == '1'
+        run: |
+          if [ -d data ]; then
+            git rm -r -q data
+            git commit -q -m "Архів перенесено в гілку archive"
+            git push -q origin HEAD:main
+          fi
