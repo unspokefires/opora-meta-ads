@@ -1,0 +1,360 @@
+{
+"files": {
+"ПРОЧИТАЙ_МЕНЕ.txt": {
+"id": "1QZ0yxTUag7NylgXgMQIkIL0SsQKddCU-",
+"key": "9f1324f63a64e8e8be5ebf0cd75f9336"
+},
+"архів_jsonl/2018/2018-01.jsonl.gz": {
+"id": "1Qx7SMxmX45n9jVZzHvrWPVRDyrHW-3XJ",
+"key": "fd44259b74724f0c05ba76d295409489"
+},
+"архів_jsonl/2018/2018-05.jsonl.gz": {
+"id": "1CwVUPS1SheqIdz-GesP7WupR85m4Uor_",
+"key": "147821b66fe9c8c83592f04caf8ab4dc"
+},
+"архів_jsonl/2018/2018-07.jsonl.gz": {
+"id": "18_SVwcz6str4gd3TqTEMY64wFcxdmYAv",
+"key": "328d06c390ce2429b0f65d2294aaff39"
+},
+"архів_jsonl/2018/2018-08.jsonl.gz": {
+"id": "1zLvMhhqsyPtfbnKkMBRcyXCtfC1wwpb0",
+"key": "662feaf10cb1c7363be4f4b5db9cfce7"
+},
+"архів_jsonl/2018/2018-09.jsonl.gz": {
+"id": "1OZebG1d0lVtwShTECSka3Ue1jzpuvRmK",
+"key": "42788c4894f542b8adcceb65f0cac13e"
+},
+"архів_jsonl/2018/2018-10.jsonl.gz": {
+"id": "1KgWqqB71f3qb4RFaPLGbtC5St-kTLx9C",
+"key": "c4617db5fddbaab48208849c2dee64c5"
+},
+"архів_jsonl/2018/2018-12.jsonl.gz": {
+"id": "1SiARu2_otfaPa_So7QVPQ2A7i3L9SS91",
+"key": "b3d6165da569a8554551254fa58e8a58"
+},
+"архів_jsonl/2019/2019-01.jsonl.gz": {
+"id": "12zgIYe8wqyNaQhwz9E3nY47PQRKL2saa",
+"key": "bdc422dcd8128432bdf27f636453e022"
+},
+"архів_jsonl/2019/2019-02.jsonl.gz": {
+"id": "1SdUrzBWDNamV-h2tVMg8xM-x2HF48DS9",
+"key": "e3fe9da8cc015105524b80e7c5f34677"
+},
+"архів_jsonl/2019/2019-03.jsonl.gz": {
+"id": "1mjK7Ev-TWogF8O8ra9WCFi0ZhUMXKhxj",
+"key": "3edab500152981dc980fc92470931c7f"
+},
+"архів_jsonl/2019/2019-04.jsonl.gz": {
+"id": "1R-eKdg1NdXu2dZRQBREEEL-Y9tkcOJLz",
+"key": "a325e56bddf19d885e632af10ec224aa"
+},
+"архів_jsonl/2019/2019-05.jsonl.gz": {
+"id": "1OIrMs4VeOWHCFcDjXDEenkgzylg1FjwA",
+"key": "c01e8f1ee3791a7c6ae2ff8a6a1bccb0"
+},
+"архів_jsonl/2019/2019-06.jsonl.gz": {
+"id": "1b7yo5zDzVuvmrIAtgHK9DUDfnba7ZNnK",
+"key": "8574e28e716cfd9c3688bc46165e9ae2"
+},
+"архів_jsonl/2019/2019-07.jsonl.gz": {
+"id": "1BYGBv4HNG-AK2_BbtTTwrpLgjO96HFTO",
+"key": "404317de8934b3922e46c5d40ab29388"
+},
+"архів_jsonl/2019/2019-08.jsonl.gz": {
+"id": "13jqDPh_f9lZMjB5cSDNUtUZFZ5nLqfAx",
+"key": "6d1aeff131fb9417f5b9f8c74e6fdf39"
+},
+"архів_jsonl/2019/2019-09.jsonl.gz": {
+"id": "1bzmzaA2L9OsZ86Hq0_wQuuRbsFB0yoEU",
+"key": "cbcc4912f23c0afb8f13c9f9b15f4212"
+},
+"архів_jsonl/2019/2019-10.jsonl.gz": {
+"id": "1PHKtpEGf0YVx3-iA3pHX73PGJ0QceY6Z",
+"key": "e29483e584b47641cd99631e30b77a82"
+},
+"архів_jsonl/2019/2019-11.jsonl.gz": {
+"id": "1TYVZeotm_eEyamswXe6hrZ5pdbvhM6PD",
+"key": "6c0a713088dc4634e0e8491f9daca51c"
+},
+"архів_jsonl/2019/2019-12.jsonl.gz": {
+"id": "1d7xC5FKEmK5e9OthIea1M-KxXyRepD8Z",
+"key": "269c86bd4a1811efbb2dbc53c6e40769"
+},
+"архів_jsonl/2020/2020-01.jsonl.gz": {
+"id": "1CEkYpoToHMnF9aDpvSLhUZ4lHGMv-sMA",
+"key": "44440e60639de27ac5631ff3ab7ad101"
+},
+"архів_jsonl/2020/2020-02.jsonl.gz": {
+"id": "1tbkblj4uKkM0Ctm8L9HDigDmGzEfEhrO",
+"key": "364b4a0b3e54adc1fe3f5b0bb762c3db"
+},
+"архів_jsonl/2020/2020-03.jsonl.gz": {
+"id": "1nmykO-xNjj-ulgLJRAeM9ldJurpvfoGG",
+"key": "48ffc7c8ea8ef25d0722bf1b2088ee22"
+},
+"архів_jsonl/2020/2020-04.jsonl.gz": {
+"id": "1jXNr1OxT_QvA8_PyQkjy04O52vSAtN9o",
+"key": "206da0c9a2770c9a8810e3d636e9320d"
+},
+"архів_jsonl/2020/2020-05.jsonl.gz": {
+"id": "1bUOQ2Dd8LkX7im0_z4HpZQr82bXx4cnx",
+"key": "9b01b178e98c67b027543a29a4f30894"
+},
+"архів_jsonl/2020/2020-06.jsonl.gz": {
+"id": "1g5YjwVe260bgLgBTVAAXoryxmsQCyryb",
+"key": "cc4ffc9064e6055213d0789290c3e044"
+},
+"архів_jsonl/2020/2020-07.jsonl.gz": {
+"id": "1XrUXftlFuZn4lbbdZQQvd1JPxV6pb5nz",
+"key": "db2c5b842e6213740ccb55450e60b5b6"
+},
+"архів_jsonl/2020/2020-08.jsonl.gz": {
+"id": "1r7WCZmF20p8fNvXg6zGbhaERlUFgmqEs",
+"key": "0800140ed1f9589231121d723c386652"
+},
+"архів_jsonl/2020/2020-09.jsonl.gz": {
+"id": "1v-LbRA8YbfYAqPe9Cz15Fi5FYnP0FMxg",
+"key": "82b8d79bc2b090ed3366f1137169c1c9"
+},
+"архів_jsonl/2020/2020-10.jsonl.gz": {
+"id": "1lL7F59gsvbORhyGq9g2n9vnMfncetdX_",
+"key": "e9c63757933e99f48b94ecf4bd45080d"
+},
+"архів_jsonl/2020/2020-11.jsonl.gz": {
+"id": "18O0oS51FE2VXp0ZFTmirkaI-V4LUoOui",
+"key": "1c6801751952f9e17d98a96192d6d458"
+},
+"архів_jsonl/2020/2020-12.jsonl.gz": {
+"id": "1znXcaOWnxDRSFXJvhD9_JHk9L3GbX1Ag",
+"key": "db27c4ff182d23344b02856fa3625d36"
+},
+"архів_jsonl/2021/2021-01.jsonl.gz": {
+"id": "1WwrflpvxmmDE3xIogUABiqWMSq8d6n7C",
+"key": "7444f3fba4f589b3e6b7a0515be14ef9"
+},
+"архів_jsonl/2021/2021-02.jsonl.gz": {
+"id": "1v4MqZ7RcUxJTqh51pWZn9BOGu2Dq6z6s",
+"key": "abe8b7a29771595d3b74f9e066181378"
+},
+"архів_jsonl/2021/2021-03.jsonl.gz": {
+"id": "1bhIwIMAukuWbWCPA_XCjsoByr_6tvyLu",
+"key": "427e462f3d881af6aed4d28640ea745d"
+},
+"архів_jsonl/2021/2021-04.jsonl.gz": {
+"id": "1iTctysPJLMnwxgVZdwqwkQuudOMmp7sy",
+"key": "5cccff98cd10397c1af5a86d44036578"
+},
+"архів_jsonl/2021/2021-05.jsonl.gz": {
+"id": "1OD8BVjJYp1z0XH1ZKpMqxGAG0ZxFeGgA",
+"key": "e3160ad45a3cfcc47e7010f282d49667"
+},
+"архів_jsonl/2021/2021-06.jsonl.gz": {
+"id": "176uwmGPthfPCMDGmTB_aLrvg1Ew0WaMm",
+"key": "c248c577f2862443a4a7ec04197d8b70"
+},
+"архів_jsonl/2021/2021-07.jsonl.gz": {
+"id": "1csYlFln2TneBLG_6151MH_2_iVL02Eo6",
+"key": "5f735fc1d85df82102af0ddbddf61945"
+},
+"архів_jsonl/2021/2021-08.jsonl.gz": {
+"id": "1MPT1yxg3aWP1F8paVBV3WZMwkV-cS9IN",
+"key": "af6f476efd1ace0fb0b13f68e19e5093"
+},
+"архів_jsonl/2021/2021-09.jsonl.gz": {
+"id": "17_34Hi9EnOnL3kt1cNY4Hc61-gAE3uJl",
+"key": "13b6db0b0bcd20b1926ccb3da35ac90d"
+},
+"архів_jsonl/2021/2021-10.jsonl.gz": {
+"id": "1SvFyr5In2mmZ5q2VB-ybbkNEfQUybNMG",
+"key": "979cd832cbfdbe2f0c4d5b06f02e68a1"
+},
+"архів_jsonl/2021/2021-11.jsonl.gz": {
+"id": "1MeDZEU-4KUBx5Rh09NePa0FYY36F2JSd",
+"key": "3506eb14bfafe221aa6c5a839cad4bc8"
+},
+"архів_jsonl/2021/2021-12.jsonl.gz": {
+"id": "1CmNkKEAAbDtGP7fZ6M4f08vHjQGlpsJW",
+"key": "9bb4f0c9e57c9a69b14254688db7ae53"
+},
+"архів_jsonl/2023/2023-02.jsonl.gz": {
+"id": "1-CwPxD6ntL6EGK3fIGmIMEDV6aFlOm7q",
+"key": "c58f3ee0f88391d5f8f95fcbcaaec759"
+},
+"архів_jsonl/2023/2023-10.jsonl.gz": {
+"id": "1ixu_mQ47AUyL-qTuwatWBLA2azZlu1Gx",
+"key": "5b9106bef11e8975f90af79fa3ccc436"
+},
+"архів_jsonl/2023/2023-12.jsonl.gz": {
+"id": "1QIJbeh0AId7fyqfFsNTitRLxfqbxFe6_",
+"key": "75bcde884b7502b76d2ff3b9507e3e31"
+},
+"архів_jsonl/2024/2024-05.jsonl.gz": {
+"id": "1GjVP-eBGVUe446wa96vlcWLpb58wYjTu",
+"key": "d27ac0ec8407b725c38c6c3e0e2164a1"
+},
+"архів_jsonl/2024/2024-07.jsonl.gz": {
+"id": "16psla6_tJ_w7Z3ZAa0-wBoOYHusnuuyJ",
+"key": "879dac1c955572c1f42a86cc385ceb57"
+},
+"архів_jsonl/2024/2024-12.jsonl.gz": {
+"id": "1oKTktdjP-I4WBYcp-t9eHthJGZPn7H_v",
+"key": "dd3edc5bcf893e5834efc7e300142421"
+},
+"архів_jsonl/2025/2025-01.jsonl.gz": {
+"id": "1r1_csXZsWhJm9fGaHFIa-o4W4a1u-PoP",
+"key": "f16635717e4fec0ababb34d9789daeb5"
+},
+"архів_jsonl/2025/2025-02.jsonl.gz": {
+"id": "1CDkVVGgMB9L09wzXzZ8s-i3ZP8BiKiym",
+"key": "3c3d063adec9ea147675bd9b26bb0d41"
+},
+"архів_jsonl/2025/2025-03.jsonl.gz": {
+"id": "1hCwXeWA3P8qV3mXHg8bKTFy4fWrQNguI",
+"key": "215934cb540a8230c53a5693ed81ed36"
+},
+"архів_jsonl/2025/2025-04.jsonl.gz": {
+"id": "1pA5odRoxFOMKsH2OvXlOcHW2Clu9si8i",
+"key": "074d4dc46b0847b96d8645822c0b7412"
+},
+"архів_jsonl/2025/2025-05.jsonl.gz": {
+"id": "1BeWdCMnHfXqMQM5RYDGKeEsXIgDddrx-",
+"key": "1a3151a37cbf7a69a1b995a939312de2"
+},
+"архів_jsonl/2025/2025-07.jsonl.gz": {
+"id": "1eEeNuSLOr2w_693020t1FkDnDh4Iwd-X",
+"key": "90fa1daeb098ea91f6635efbb57c59b2"
+},
+"архів_jsonl/2025/2025-08.jsonl.gz": {
+"id": "1YccQaPXjKI_Do0j0TA6QAgQe0fKPgILQ",
+"key": "3aa3330431a8e27673c2b77b05e966e5"
+},
+"архів_jsonl/2025/2025-09.jsonl.gz": {
+"id": "1P8OrfngCyG3UzMioM0JNYi3bfp35xeaV",
+"key": "9fca8d862d66a8ca46229a988aeae65c"
+},
+"архів_jsonl/2025/2025-10.jsonl.gz": {
+"id": "1gzXKTCOifMdM2tJKd58PRcDkjSAis8r3",
+"key": "440a22e5e09b99ba5e660e10c782bdbe"
+},
+"архів_jsonl/2025/2025-11.jsonl.gz": {
+"id": "14_9CpNzy0HSReumZPhkBB0AO6zpSX1QN",
+"key": "5d74d880c163e751a6723be5697051fd"
+},
+"архів_jsonl/2025/2025-12.jsonl.gz": {
+"id": "1qgCn4pl1OfMZmSiFS3Lr8Df1V4aaaP1T",
+"key": "42a0a9a62271418cabd617bf7f8bbcba"
+},
+"архів_jsonl/2026/2026-01.jsonl.gz": {
+"id": "1aswDOUKKUjriWrHn8x5o_6RP7CDDM9o9",
+"key": "5550bc8d236cad346100e6f0f736c9e0"
+},
+"архів_jsonl/2026/2026-02.jsonl.gz": {
+"id": "1VaqVyxnjd1vGNVo2R2ua3JKXnDEjra2W",
+"key": "92f9a2d732e3dd4da4cd963f69d31cff"
+},
+"архів_jsonl/2026/2026-03.jsonl.gz": {
+"id": "1PaefebWGpDOnOn6T5XZYdpGA83Mhjb3H",
+"key": "95b6856243147b16971231049a0c665a"
+},
+"архів_jsonl/2026/2026-04.jsonl.gz": {
+"id": "1UHLjjy5lSIpHpF9gfhz9DT4EKfS6_IJg",
+"key": "a5058e12a0e6da9ea145bf9a8778c021"
+},
+"архів_jsonl/2026/2026-05.jsonl.gz": {
+"id": "1Ta9x59jNqv4o2v_vH61U9pQ5ul5DafOR",
+"key": "caa9f9e246a38bc6b355f59c8db893a7"
+},
+"архів_jsonl/2026/2026-06.jsonl.gz": {
+"id": "1MlsjkLo6H4d7RV320MWpF6DNmp37k2ze",
+"key": "aa86e4c3ef54f81b8ebb6d33c8751137"
+},
+"архів_jsonl/2026/2026-07.jsonl.gz": {
+"id": "1IvsqkkGV-suGMb3D3uqHA5JVCbAQsj9T",
+"key": "6cf769a92f64ec78ea587e6fd71648ec"
+},
+"архів_jsonl/2026/2026-08.jsonl.gz": {
+"id": "14TGOXEOcC6R8vx6N1urE10OsFlcYQDfR",
+"key": "b6f3b1bc90c4162ae472f9f1fd633d35"
+},
+"архів_jsonl/2026/2026-09.jsonl.gz": {
+"id": "1N7bmqypRNHho70cslrRNxa31qIWB96uC",
+"key": "2cdf417f4b059479d4ada6c526e18293"
+},
+"архів_jsonl/2026/2026-10.jsonl.gz": {
+"id": "139HDDD88qKUovqOEEZBFjKtgeGCgimSr",
+"key": "df6de20eca5f30bf36971dc32b46a6d8"
+},
+"архів_jsonl/2026/2026-11.jsonl.gz": {
+"id": "1xrhARQ6lXwVGE49hjjOgiDaLIdUMzBJD",
+"key": "752aa80f86e1d82b54d6e1dbc0f20908"
+},
+"таблиці_csv/оголошення_2018.csv": {
+"id": "1QT21O1v7CLspx7gx0SJtz9IqXiCkFsAP",
+"key": "a8a0a7897258fb2f8d227ae404e3ff33"
+},
+"таблиці_csv/оголошення_2019.csv": {
+"id": "1f_abcfTjd3J4Kr-9wTN6404zQnuccR1w",
+"key": "8e6bbe8daa38a1f1443aade08f8dcaf5"
+},
+"таблиці_csv/оголошення_2020.csv": {
+"id": "1jUhfXDj9sS3fmw8p2yqEpxvHgCjUK6wX",
+"key": "6b7bdbc7c58039b4faa6c07d63f9341f"
+},
+"таблиці_csv/оголошення_2021.csv": {
+"id": "1jJ7A7hxHrGIy28PC4Z79YmKUklf0bHQw",
+"key": "1f736ff90cf3f6c533d6170da934c7a3"
+},
+"таблиці_csv/оголошення_2023.csv": {
+"id": "1D8li661PCwBqM7Ih9wEk7F2P43qoZHQx",
+"key": "bb5b81bb324a830241c66bff5bf4f1e8"
+},
+"таблиці_csv/оголошення_2024.csv": {
+"id": "1cbmWXVB_s9R8RKNhlp9WL0SRofhRitRP",
+"key": "b7bdb7df5e1dda154c2fe0673557277d"
+},
+"таблиці_csv/оголошення_2025.csv": {
+"id": "13jNfrMrYHv2VhAtg8ucXbXZhT2fgQCu9",
+"key": "8b62a24b06709c0bba697b470b5b7b5d"
+},
+"таблиці_csv/оголошення_2026.csv": {
+"id": "13pLQKx9V-6t6peRakF1asod624GHDJ3P",
+"key": "480d746a08dad312f51bc39fe03196cb"
+},
+"таблиці_csv/регіони_2018.csv": {
+"id": "1GWnDsivWXwgPNuW5Z5VLhIpiOHcFyc95",
+"key": "576c496b2305746580ff1c79e7b33ff6"
+},
+"таблиці_csv/регіони_2019.csv": {
+"id": "19YAFMlL4U0ibIDJ3eBB4JjVaFgfXzZjz",
+"key": "24c6b17aa9670def6526d0ec064a1dd0"
+},
+"таблиці_csv/регіони_2020.csv": {
+"id": "1qVUOqCoxpDecLr1JazHAbv-u_CUPWYZG",
+"key": "ec57c3e5a86fa3d8125959bf5fcf5db3"
+},
+"таблиці_csv/регіони_2021.csv": {
+"id": "11FRUbJ1iBqUW-P4FkA-Nt8kNFFaYHemZ",
+"key": "dbf47bca446af2886dccbcfae58235c1"
+},
+"таблиці_csv/регіони_2023.csv": {
+"id": "17vG2hOliasUjSvDyY1Tqn0ckn7XW7822",
+"key": "0fad37b61eb4701893f3f82bd1f8fabd"
+},
+"таблиці_csv/регіони_2024.csv": {
+"id": "1v2qBt8POveytbjG5qzcnecHXXteKUjNX",
+"key": "e99580c5b36693bc87a5d815d6d422be"
+},
+"таблиці_csv/регіони_2025.csv": {
+"id": "1i_EQn_d-3oAQ0lupVacF20nETFpAAye9",
+"key": "ae838d32352fafa0bfa66bc03582c7d2"
+},
+"таблиці_csv/регіони_2026.csv": {
+"id": "1ebirk6KXxb8ATOzPU9HjFR8ZM2A5OvX7",
+"key": "021b6bc9a6a06b8114411872b4381c60"
+},
+"таблиці_csv/сторінки.csv": {
+"id": "1IsIqwhLr-necv-ouOkMutICxHFk1PqCI",
+"key": "928f16aaf9e28a6b63143dbb81f356e4"
+}
+}
+}
